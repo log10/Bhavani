@@ -6,7 +6,7 @@ const { DefinePlugin, ProgressPlugin, optimize, ContextReplacementPlugin, Normal
 const { AngularCompilerPlugin } = require('@ngtools/webpack')
 
 const TEST_ASSETS = /assets[\/\\].*\.scss$/;
-const OUTPUT_PATH = path.resolve(__dirname, 'dist')
+const OUTPUT_PATH = path.resolve(__dirname, 'docs')
 const SOURCE_PATH = path.resolve(__dirname, 'src')
 const STATS = {
   colors: true,
