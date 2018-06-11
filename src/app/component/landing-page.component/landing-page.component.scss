@@ -1,8 +1,9 @@
-.landing-div {
+header {
 	background: #3f51b5;
 	color: #fff;
-	height: -webkit-fill-available;
-	overflow-y: auto;
+	height: 45vh;
+    position: relative;
+    padding-top: 8vh;
 }
 
 .center-div {
@@ -14,8 +15,7 @@
 	transform: translateY(-50%);
 }
 
-.center-div h1 {
-	font-size: 56px;
-    font-weight: 300;
-    line-height: 56px;
+.center-div span {
+	position: relative;
+    top: -6vh;
 }
