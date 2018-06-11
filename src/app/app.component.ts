@@ -1,11 +1,11 @@
+
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'bv-app-root',
   templateUrl: './app.component.pug',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app works!<br>Testing build';
   constructor() {}
 }

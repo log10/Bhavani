@@ -1,0 +1,21 @@
+.landing-div {
+	background: #3f51b5;
+	color: #fff;
+	height: -webkit-fill-available;
+	overflow-y: auto;
+}
+
+.center-div {
+	text-align: -webkit-center;
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.center-div h1 {
+	font-size: 56px;
+    font-weight: 300;
+    line-height: 56px;
+}

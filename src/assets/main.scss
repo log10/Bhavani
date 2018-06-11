@@ -1,7 +1,16 @@
+@import '~@angular/material/theming';
+
+// always include only once per project
+@include mat-core();
+
 @import "variables";
+@import 'prebuilt-themes/indigo-pink.css';
 
 body {
   background-color: $white;
   color: $black;
   -webkit-font-smoothing: antialiased;
+  margin: 0px;
 }
+
+.material-icons.mat-20 { font-size: 20px; }
