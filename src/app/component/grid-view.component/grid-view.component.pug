@@ -1,0 +1,6 @@
+div
+	mat-grid-list('[cols]'='grid.cols' '[rowHeight]'='grid.rowHeight')
+		mat-grid-tile(
+			'*ngFor'='let story of stories'
+		)
+			bv-grid-content('[content]'='story')

@@ -94,6 +94,7 @@ const webpackConfig = {
       // load scss from app as raw css strings
       { test: /\.scss$/, exclude: TEST_ASSETS, loaders: ['to-string-loader', 'css-loader', 'sass-loader'] },
       { test: /\.css$/, loader: 'raw-loader' },
+      { test: /\.json$/, loader: 'raw-loader' },
       { test: /\.ts$/, loader: '@ngtools/webpack' },
       { test: /\.jpg$/, loader: "file-loader" },
       { test: /\.png$/, loader: "url-loader?mimetype=image/png" },

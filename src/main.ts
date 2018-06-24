@@ -1,3 +1,4 @@
+/// <reference path="./typings.d.ts" />
 // import scss
 import './assets/main.scss';
 
