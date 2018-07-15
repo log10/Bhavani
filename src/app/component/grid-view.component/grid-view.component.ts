@@ -1,9 +1,10 @@
 
 import { Component, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { TdMediaService } from '@covalent/core/media';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 
-import { default as STORIES_LIST } from '../../../assets/stories/storiesList.json';
+import { StoryService } from '../../service/story.service/story.service';
 
 const COLS = {
   normal: 4,
@@ -22,14 +23,20 @@ const ROW_HEIGHT = {
   styleUrls: ['./grid-view.component.scss']
 })
 export class GridViewComponent implements OnInit, OnDestroy {
-  stories = JSON.parse(STORIES_LIST);
+  stories = [];
   grid = {
     cols: COLS.normal,
     rowHeight: ROW_HEIGHT.normal
   };
   private _querySubscriptions: Subscription[];
 
-  constructor(private _mediaService: TdMediaService, private _ngZone: NgZone) {
+  constructor(
+    private _mediaService: TdMediaService,
+    private _ngZone: NgZone,
+    private router: Router,
+    private storyService: StoryService
+  ) {
+    this.stories = this.storyService.getStories();
   }
 
   setGridSettings(mode: string) {

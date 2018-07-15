@@ -1,2 +1,5 @@
-div(class='mat-elevation-z2 content-div')
-	span(class='mat-display-1') {{content}}
+div(
+  class='mat-elevation-z2 content-div'
+  '(click)'='gotoStory()'
+)
+	span(class='mat-display-1') {{content.name}}

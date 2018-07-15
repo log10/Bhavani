@@ -1,21 +1,5 @@
-header {
-	background: #3f51b5;
-	color: #fff;
-	height: 45vh;
-    position: relative;
-    padding-top: 8vh;
-}
-
-.center-div {
-	text-align: -webkit-center;
-	position: relative;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
-}
-
-.center-div span {
-	position: relative;
-    top: -6vh;
+div {
+  padding: 1.5vh 1.5vw 1.5vh 1.5vw;
+  background-color: #efeeee;
+  height: -webkit-fill-available;
 }
