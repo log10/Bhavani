@@ -59,7 +59,7 @@ const webpackConfig = {
   },
   output: {
     path: OUTPUT_PATH,
-    publicPath: '',
+    publicPath: '/Bhavani',
     filename: '[name].bundle.js'
   },
   plugins: [
