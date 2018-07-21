@@ -3,10 +3,11 @@ import { Component, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription, Observable, of, from } from 'rxjs';
-import { switchMap, first } from 'rxjs/operators';
+import { switchMap, first, filter, map, publishReplay, refCount } from 'rxjs/operators';
 import { TdMediaService } from '@covalent/core/media';
 
 import { StoryService, Story } from '../../service/story.service/story.service';
+import { PageService } from '../../service/story.service/page.service';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
   pageNumber = '1';
 
   private _querySubscriptions: Subscription[];
-  private storyName: Observable<string>;
+  private storyName: Observable<any>;
+  private view: string;
 
   constructor(
     private _mediaService: TdMediaService,
@@ -30,14 +32,20 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
     private router: Router,
     private _ngZone: NgZone,
     private storyService: StoryService,
+    private pageService: PageService,
     private sanitizer: DomSanitizer
   ) {}
+
+  goTo(pageToGo: number) {
+    this.router.navigate(['../' + pageToGo], {relativeTo: this.route});
+  }
 
   watchScreen(): void {
     this._querySubscriptions = [];
     this._querySubscriptions.push(this._mediaService.registerQuery('sm').subscribe((matches: boolean) => {
       this._ngZone.runOutsideAngular(() => {
         if (matches) {
+          this.view = 'medium';
           this.router.navigate(['../../medium/' + this.pageNumber], {relativeTo: this.route});
         }
       });
@@ -45,6 +53,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
     this._querySubscriptions.push(this._mediaService.registerQuery('xs').subscribe((matches: boolean) => {
       this._ngZone.runOutsideAngular(() => {
         if (matches) {
+          this.view = 'small';
           this.router.navigate(['../../small/' + this.pageNumber], {relativeTo: this.route});
         }
       });
@@ -52,6 +61,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
     this._querySubscriptions.push(this._mediaService.registerQuery('gt-sm').subscribe((matches: boolean) => {
       this._ngZone.runOutsideAngular(() => {
         if (matches) {
+          this.view = 'normal';
           this.router.navigate(['../../normal/' + this.pageNumber], {relativeTo: this.route});
         }
       });
@@ -77,9 +87,12 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
       switchMap((params: ParamMap) => {
         console.log('story change!');
         return this.storyService.getStory(params.get('name'));
-      })
+      }),
+      publishReplay(1),
+      refCount()
     );
     this.route.paramMap.pipe(
+      filter((params: ParamMap) => +params.get('page') > 0),
       switchMap(async (params: ParamMap) => {
         this.pageNumber = params.get('page');
         return {
@@ -96,6 +109,17 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
     });
     this.watchScreen();
     this.storyService.ngOnInit();
+    this.pageService.goTo.pipe(
+      filter((direction: number) => direction !== 0),
+      map((direction: number) => +this.pageNumber + direction),
+      switchMap(async (pageToGo: number) => {
+        const pageCount = await this.storyService.pageCount(
+          await this.storyName.pipe(first()).toPromise(),
+          this.view).pipe(first()).toPromise();
+        return (pageToGo <= 0 || pageToGo > pageCount) ? 0 : pageToGo;
+      }),
+      filter((pageToGo: number) => pageToGo !== 0)
+    ).subscribe((direction: number) => this.goTo(direction));
   }
 
   ngOnDestroy(): void {

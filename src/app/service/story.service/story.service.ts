@@ -1,7 +1,7 @@
 import { Injectable, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, of, from, EMPTY  } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter, first, publishReplay, refCount } from 'rxjs/operators';
 
 import { default as STORIES_LIST } from '../../../assets/stories/storiesList.json';
 
@@ -43,10 +43,18 @@ export class StoryService implements OnInit, OnDestroy {
   getStory(name: string) {
     if (!this.stories[name]) {
       this.stories[name] = from(import('../../../assets/stories/' + name + '.json')).pipe(
-        map(story => JSON.parse(story.toString()))
+        map(story => JSON.parse(story.toString())),
+        publishReplay(1),
+        refCount()
       );
     }
     return this.stories[name].pipe(map(() => name));
+  }
+
+  pageCount(storyName: string, view: string) {
+    return this.stories[storyName].pipe(
+      map((story: Story) => story.paginated[view].length)
+    );
   }
 
   paginateTo(storyName: string, page: number, view: string) {

@@ -16,6 +16,7 @@ import {
 import { RoutingModule } from './module/router.module/router.module';
 
 import { StoryService } from './service/story.service/story.service';
+import { PageService } from './service/story.service/page.service';
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './component/landing-page.component/landing-page.component';
@@ -47,7 +48,10 @@ import { ReaderContentComponent } from './component/reader-content.component/rea
     CovalentMediaModule,
     BrowserAnimationsModule
   ],
-  providers: [StoryService],
+  providers: [
+    StoryService,
+    PageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
