@@ -23,7 +23,16 @@ export class ReaderComponent implements OnInit {
 
   ngOnInit() {
     this.clicks.pipe(
-      map(event => ((event.target['clientWidth'] / 2) >= event.clientX) ? -1 : 1)
+      map(event => {
+        const width = event.target['clientWidth'];
+        let direction = 0;
+        if (width * 0.4 >= event.clientX) {
+          direction--;
+        } else if (width * 0.6 <= event.clientX) {
+          direction++;
+        }
+        return direction;
+      })
     ).subscribe(direction => this.pageService.go(direction));
   }
 }

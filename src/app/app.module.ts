@@ -10,7 +10,8 @@ import {
   MatButtonModule,
   MatToolbarModule,
   MatGridListModule,
-  MatCardModule
+  MatCardModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { RoutingModule } from './module/router.module/router.module';
@@ -44,6 +45,7 @@ import { ReaderContentComponent } from './component/reader-content.component/rea
     MatToolbarModule,
     MatGridListModule,
     MatCardModule,
+    MatProgressSpinnerModule,
     RoutingModule,
     CovalentMediaModule,
     BrowserAnimationsModule

@@ -9,7 +9,6 @@ import { TdMediaService } from '@covalent/core/media';
 import { StoryService, Story } from '../../service/story.service/story.service';
 import { PageService } from '../../service/story.service/page.service';
 
-
 @Component({
   selector: 'bv-reader-content',
   templateUrl: './reader-content.component.pug',
@@ -21,6 +20,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
     'font-size' : '3em'
   };
   pageNumber = '1';
+  spinner = true;
 
   private _querySubscriptions: Subscription[];
   private storyName: Observable<any>;
@@ -37,7 +37,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
   ) {}
 
   goTo(pageToGo: number) {
-    this.router.navigate(['../' + pageToGo], {relativeTo: this.route});
+    this.router.navigate(['../' + pageToGo], {relativeTo: this.route, replaceUrl: true});
   }
 
   watchScreen(): void {
@@ -46,7 +46,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
       this._ngZone.runOutsideAngular(() => {
         if (matches) {
           this.view = 'medium';
-          this.router.navigate(['../../medium/' + this.pageNumber], {relativeTo: this.route});
+          this.router.navigate(['../../medium/' + this.pageNumber], {relativeTo: this.route, replaceUrl: true});
         }
       });
     }));
@@ -54,7 +54,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
       this._ngZone.runOutsideAngular(() => {
         if (matches) {
           this.view = 'small';
-          this.router.navigate(['../../small/' + this.pageNumber], {relativeTo: this.route});
+          this.router.navigate(['../../small/' + this.pageNumber], {relativeTo: this.route, replaceUrl: true});
         }
       });
     }));
@@ -62,7 +62,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
       this._ngZone.runOutsideAngular(() => {
         if (matches) {
           this.view = 'normal';
-          this.router.navigate(['../../normal/' + this.pageNumber], {relativeTo: this.route});
+          this.router.navigate(['../../normal/' + this.pageNumber], {relativeTo: this.route, replaceUrl: true});
         }
       });
     }));
@@ -71,6 +71,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
   private refreshPage(pageStyle: any, pageContent: any) {
     this.setFontSize(pageStyle);
     this.setPageContent(pageContent);
+    this.spinner = false;
   }
 
   private setFontSize(pageStyle: any) {
@@ -95,10 +96,13 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
       filter((params: ParamMap) => +params.get('page') > 0),
       switchMap(async (params: ParamMap) => {
         this.pageNumber = params.get('page');
+        const storyName = await this.storyName.pipe(first()).toPromise();
+        this.pageService.setLastPage(storyName, this.pageNumber);
+        this._ngZone.run(() => this.spinner = true);
         return {
           'pageStyle': this.storyService.getFontStyle(params.get('view')),
           'pageContent': await this.storyService.paginateTo(
-            await this.storyName.pipe(first()).toPromise(),
+            storyName,
             +params.get('page'),
             params.get('view')).pipe(first()).toPromise()
         };

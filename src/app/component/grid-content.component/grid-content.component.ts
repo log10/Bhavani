@@ -3,6 +3,8 @@ import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { TdMediaService } from '@covalent/core/media';
 
+import { PageService } from '../../service/story.service/page.service';
+
 @Component({
   selector: 'bv-grid-content',
   templateUrl: './grid-content.component.pug',
@@ -13,7 +15,8 @@ export class GridContentComponent {
 
   constructor(
     private _mediaService: TdMediaService,
-    private router: Router
+    private router: Router,
+    private pageService: PageService
   ) {}
 
   getView() {
@@ -27,7 +30,11 @@ export class GridContentComponent {
   }
 
   gotoStory() {
-    this.router.navigate(['/story/' + this.content.id + '/' + this.getView() + '/1']);
+    this.router.navigate([
+      '/story/' + this.content.id +
+      '/' + this.getView() +
+      '/' + (this.pageService.getLastPage(this.content.id) ? this.pageService.getLastPage(this.content.id) : '1')
+    ]);
   }
 
 }

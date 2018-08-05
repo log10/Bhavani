@@ -2,5 +2,9 @@
 	{ 
     "id": "thervu",
     "name": "தேர்வு"
+  },
+  { 
+    "id": "dharisanam",
+    "name": "தரிசனம்"
   }
 ]

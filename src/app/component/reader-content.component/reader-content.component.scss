@@ -1,3 +1,18 @@
 .content-div {
   text-align: justify;
 }
+
+.spinner-table {
+  height: 100vh;
+  width: 100vw;
+  display: table;
+}
+
+.spinner-cell {
+  height: 100%;
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  position: relative;
+  left: 37vw;
+}

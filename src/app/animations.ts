@@ -4,7 +4,7 @@ export const slideUpAndDownAnimation =
   trigger('slideUpAndDown', [
     state('hidden', style({
       opacity: 1,
-      transform: 'translateY(-100%)'
+      transform: 'translateY(-150%)'
     })),
     state('visible', style({
       opacity: 1,

@@ -83,7 +83,7 @@ export class StoryService implements OnInit, OnDestroy {
       let thisPageContent = '';
       for (; i < parts.length; i++) {
         const shallWeAddThis = thisPageContent + ' ' + parts[i];
-        if (parts[i].match(/(<center>)|(<\/center>)|(<br>)/g) === null
+        if (parts[i].match(/(<div style="text-align: center">)|(<\/div>)|(<br>)/g) === null
           && this.checkOverFlow(shallWeAddThis, FONT_STYLE[view])) {
           break;
         }
@@ -99,8 +99,8 @@ export class StoryService implements OnInit, OnDestroy {
     if (story.paginated[view].length === 0) {
       const htmlContent = story.content
         .replace(/\t/g, '&emsp;')
-        .replace(/<c>/gi, '<center>')
-        .replace(/<\/c>/gi, '</center>')
+        .replace(/<c>/gi, '<div style="text-align: center">')
+        .replace(/<\/c>/gi, '</div>')
         .replace(/(\n)|(\n\r)/g, ' <br> ');
       const parts = htmlContent.split(' ');
       story.paginated[view] = this.addPageContents(parts, view);
