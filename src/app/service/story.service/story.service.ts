@@ -83,7 +83,7 @@ export class StoryService implements OnInit, OnDestroy {
       let thisPageContent = '';
       for (; i < parts.length; i++) {
         const shallWeAddThis = thisPageContent + ' ' + parts[i];
-        if (parts[i].match(/(<div style="text-align: center">)|(<\/div>)|(<br>)/g) === null
+        if (parts[i].match(/(<div style="text-align: center">)|(<\/div>)/g) === null
           && this.checkOverFlow(shallWeAddThis, FONT_STYLE[view])) {
           break;
         }
