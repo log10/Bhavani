@@ -46,7 +46,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
       this._ngZone.runOutsideAngular(() => {
         if (matches) {
           this.view = 'medium';
-          this.router.navigate(['../../medium/' + this.pageNumber], {relativeTo: this.route, replaceUrl: true});
+          this.routeToPage(this.pageNumber, this.view);
         }
       });
     }));
@@ -54,7 +54,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
       this._ngZone.runOutsideAngular(() => {
         if (matches) {
           this.view = 'small';
-          this.router.navigate(['../../small/' + this.pageNumber], {relativeTo: this.route, replaceUrl: true});
+          this.routeToPage(this.pageNumber, this.view);
         }
       });
     }));
@@ -62,10 +62,14 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
       this._ngZone.runOutsideAngular(() => {
         if (matches) {
           this.view = 'normal';
-          this.router.navigate(['../../normal/' + this.pageNumber], {relativeTo: this.route, replaceUrl: true});
+          this.routeToPage(this.pageNumber, this.view);
         }
       });
     }));
+  }
+
+  private routeToPage(page: string, view: string) {
+    this.router.navigate(['../../' + view + '/' + page], {relativeTo: this.route, replaceUrl: true});
   }
 
   private refreshPage(pageStyle: any, pageContent: any) {
@@ -97,18 +101,26 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
       switchMap(async (params: ParamMap) => {
         this.pageNumber = params.get('page');
         const storyName = await this.storyName.pipe(first()).toPromise();
-        this.pageService.setLastPage(storyName, this.pageNumber);
+        const pageContent = await this.storyService.paginateTo(
+          storyName,
+          +params.get('page'),
+          params.get('view')
+        ).pipe(first()).toPromise();
+        const pageCount = await this.storyService.pageCount(storyName, params.get('view'))
+          .pipe(first()).toPromise();
+        if (pageCount !== 0 && pageCount < +this.pageNumber) {
+          this.routeToPage(pageCount, params.get('view'));
+        }
         this._ngZone.run(() => this.spinner = true);
         return {
+          'storyName': storyName,
           'pageStyle': this.storyService.getFontStyle(params.get('view')),
-          'pageContent': await this.storyService.paginateTo(
-            storyName,
-            +params.get('page'),
-            params.get('view')).pipe(first()).toPromise()
+          'pageContent': pageContent
         };
       })
     ).subscribe((pageConfig: any) => {
       console.log('page change!');
+      this.pageService.setLastPage(pageConfig['storyName'], this.pageNumber);
       this._ngZone.run(() => this.refreshPage(pageConfig['pageStyle'], pageConfig['pageContent']));
     });
     this.watchScreen();
@@ -123,7 +135,7 @@ export class ReaderContentComponent implements OnInit, OnDestroy {
         return (pageToGo <= 0 || pageToGo > pageCount) ? 0 : pageToGo;
       }),
       filter((pageToGo: number) => pageToGo !== 0)
-    ).subscribe((direction: number) => this.goTo(direction));
+    ).subscribe((pageToGo: number) => this.goTo(pageToGo));
   }
 
   ngOnDestroy(): void {

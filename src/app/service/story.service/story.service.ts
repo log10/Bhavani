@@ -98,7 +98,7 @@ export class StoryService implements OnInit, OnDestroy {
   private preProcess(story: Story, view: string) {
     if (story.paginated[view].length === 0) {
       const htmlContent = story.content
-        .replace(/\t/g, '&emsp;')
+        .replace(/\t/g, '&emsp;&emsp;')
         .replace(/<c>/gi, '<div style="text-align: center">')
         .replace(/<\/c>/gi, '</div>')
         .replace(/(\n)|(\n\r)/g, ' <br> ');
