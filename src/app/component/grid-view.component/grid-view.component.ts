@@ -1,8 +1,8 @@
 
 import { Component, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { TdMediaService } from '@covalent/core/media';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
+
 
 import { StoryService } from '../../service/story.service/story.service';
 
@@ -33,7 +33,6 @@ export class GridViewComponent implements OnInit, OnDestroy {
   constructor(
     private _mediaService: TdMediaService,
     private _ngZone: NgZone,
-    private router: Router,
     private storyService: StoryService
   ) {
     this.stories = this.storyService.getStories();

@@ -59,7 +59,7 @@ const webpackConfig = {
   },
   output: {
     path: OUTPUT_PATH,
-    publicPath: '/Bhavani',
+    publicPath: '/',
     filename: '[name].bundle.js'
   },
   plugins: [
@@ -96,7 +96,8 @@ const webpackConfig = {
       { test: /\.css$/, loader: 'raw-loader' },
       { test: /\.json$/, loader: 'raw-loader' },
       { test: /\.ts$/, loader: '@ngtools/webpack' },
-      { test: /\.jpg$/, loader: "file-loader" },
+      { test: /\.jpg$/, loader: "url-loader?mimetype=image/jpg" },
+      { test: /\.gif$/, loader: "url-loader?mimetype=image/gif" },
       { test: /\.png$/, loader: "url-loader?mimetype=image/png" },
       { test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000' },
       { test: /\.html$/, loader: 'raw-loader' },

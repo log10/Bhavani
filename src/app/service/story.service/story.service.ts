@@ -32,13 +32,25 @@ export class Story {
 @Injectable()
 export class StoryService implements OnInit, OnDestroy {
   stories = {};
+  storiesMap = {};
+  storyList = [];
   dummyDiv: any;
 
   constructor(
     private sanitizer: DomSanitizer
   ) {}
 
-  getStories() { return JSON.parse(STORIES_LIST); }
+  getStories() {
+    if (this.storyList.length === 0) {
+      this.storyList = JSON.parse(STORIES_LIST);
+      this.storyList.forEach(story => this.storiesMap[story['id']] = story['name']);
+    }
+    return this.storyList;
+  }
+
+  getStoryName(id: string) {
+    return this.storiesMap[id];
+  }
 
   getStory(name: string) {
     if (!this.stories[name]) {
@@ -82,8 +94,10 @@ export class StoryService implements OnInit, OnDestroy {
     for (let i = 0; i < parts.length; i++) {
       let thisPageContent = '';
       for (; i < parts.length; i++) {
-        const shallWeAddThis = thisPageContent + ' ' + parts[i];
-        if (parts[i].match(/(<div style="text-align: center">)|(<\/div>)/g) === null
+        const shallWeAddThis = thisPageContent + ' '
+          + parts[i].replace(/<c>/gi, '<div style="text-align: center">')
+              .replace(/<\/c>/gi, '</div>');
+        if (parts[i].match(/(<c>)|(<\/c>)/g) === null
           && this.checkOverFlow(shallWeAddThis, FONT_STYLE[view])) {
           break;
         }
@@ -99,8 +113,6 @@ export class StoryService implements OnInit, OnDestroy {
     if (story.paginated[view].length === 0) {
       const htmlContent = story.content
         .replace(/\t/g, '&emsp;&emsp;')
-        .replace(/<c>/gi, '<div style="text-align: center">')
-        .replace(/<\/c>/gi, '</div>')
         .replace(/(\n)|(\n\r)/g, ' <br> ');
       const parts = htmlContent.split(' ');
       story.paginated[view] = this.addPageContents(parts, view);

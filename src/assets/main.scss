@@ -7,10 +7,88 @@
 @import 'prebuilt-themes/indigo-pink.css';
 
 body {
-  background-color: $white;
+  background-color: $smoke_white;
   color: $black;
   -webkit-font-smoothing: antialiased;
   margin: 0px;
 }
 
 .material-icons.mat-20 { font-size: 1.8em; }
+
+.blinking-cursor-1 {
+  font-weight: 100;
+  font-size: 30px;
+  color: $black;
+  -webkit-animation: 1s blink step-end infinite;
+  -moz-animation: 1s blink step-end infinite;
+  -ms-animation: 1s blink step-end infinite;
+  -o-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+}
+
+.blinking-cursor-2 {
+  font-weight: 100;
+  font-size: 30px;
+  color: $black;
+  -webkit-animation: 1.2s blink step-end infinite;
+  -moz-animation: 1.2s blink step-end infinite;
+  -ms-animation: 1.2s blink step-end infinite;
+  -o-animation: 1.2s blink step-end infinite;
+  animation: 1.2s blink step-end infinite;
+}
+
+.blinking-cursor-3 {
+  font-weight: 100;
+  font-size: 30px;
+  color: $black;
+  -webkit-animation: 1.3s blink step-end infinite;
+  -moz-animation: 1.3s blink step-end infinite;
+  -ms-animation: 1.3s blink step-end infinite;
+  -o-animation: 1.3s blink step-end infinite;
+  animation: 1.3s blink step-end infinite;
+}
+
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}

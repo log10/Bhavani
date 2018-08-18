@@ -1,4 +1,18 @@
 header(class='mat-elevation-z0')
-	div(class='center-div')
-		h1(class='mat-display-2') லோகுவின் கதைகள் 
-		span(class='mat-headline') கதை கவிதை கட்டுரை
+  div(class='center-div')
+    h1(class='mat-display-2') லோகுவின் கதைகள் 
+    span(class='mat-headline') கதை கவிதை கட்டுரை
+
+div(class='demo-div')
+  mat-grid-list('[cols]'='grid.cols' '[rowHeight]'='grid.rowHeight' '[gutterSize]'='grid.gutterSize')
+    mat-grid-tile(
+      '*ngFor'='let content of gridContents'
+    )
+      div(class='tile-div' '[align]'='content.align')
+        div('*ngIf'='content.source')
+          img('[src]'='getSource(content.source)' '[style.width]'='content.width')
+        div('*ngIf'='content.heading')
+          div(class='text-content-div')
+            span(class='mat-headline') {{content.heading}}
+            br
+            p {{content.description}}
