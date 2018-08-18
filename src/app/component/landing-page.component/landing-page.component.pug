@@ -13,6 +13,6 @@ div(class='demo-div')
           img('[src]'='getSource(content.source)' '[style.width]'='content.width')
         div('*ngIf'='content.heading')
           div(class='text-content-div')
-            span(class='mat-headline') {{content.heading}}
+            span(class='mat-headline' '[style.width]'='content.width') {{content.heading}}
             br
-            p {{content.description}}
+            p('[style.width]'='content.width') {{content.description}}

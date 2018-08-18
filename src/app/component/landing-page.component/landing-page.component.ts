@@ -8,11 +8,11 @@ const COLS = {
 };
 const ROW_HEIGHT = {
   normal: '27em',
-  small: '27em'
+  small: '15em'
 };
 const GUTTER_SIZE = {
   normal: '2.6em',
-  small: '2.6em'
+  small: '1em'
 };
 const CONTENTS = {
   normal: [
@@ -22,11 +22,13 @@ const CONTENTS = {
       align: 'right'
     },
     {
+      width: '60%',
       align: 'left',
       heading: 'சிறுகதைகள்',
       description: 'சிறுகதைகளின் தொகுப்புக்கு செல்ல ‘சிறுகதைகள்’ பொத்தானை அழுத்தவும்'
     },
     {
+      width: '60%',
       align: 'right',
       heading: 'சிறுகதைகளின் தொகுப்பு',
       description: 'இத்தொகுப்பில் உள்ள கதைகளை வாசிக்க கதையின் பெயரட்டையை தொடுங்கள்'
@@ -42,11 +44,13 @@ const CONTENTS = {
       align: 'right'
     },
     {
+      width: '60%',
       align: 'left',
       heading: 'கதையின் பக்கங்கள்',
       description: 'அடுத்து பக்கத்துக்கு செல்ல பக்கத்தின் இடது புறத்தில் தீண்டவும்'
     },
     {
+      width: '60%',
       align: 'right',
       heading: 'கதையின் பக்கங்கள்',
       description: 'முன் பக்கத்துக்கு செல்ல பக்கத்தின் வலது புறத்தில் தீண்டவும்'
@@ -58,7 +62,50 @@ const CONTENTS = {
     }
   ],
   small: [
-  {}
+    {
+      width: '90%',
+      align: 'center',
+      heading: 'சிறுகதைகள்',
+      description: 'சிறுகதைகளின் தொகுப்புக்கு செல்ல ‘சிறுகதைகள்’ பொத்தானை அழுத்தவும்'
+    },
+    {
+      source: 'sirukadhaigal_button.gif',
+      width: '85vw',
+      align: 'center'
+    },
+    {
+      width: '90%',
+      align: 'center',
+      heading: 'சிறுகதைகளின் தொகுப்பு',
+      description: 'இத்தொகுப்பில் உள்ள கதைகளை வாசிக்க கதையின் பெயரட்டையை தொடுங்கள்'
+    },
+    {
+      source: 'story_button.gif',
+      width: '87vw',
+      align: 'center'
+    },
+    {
+      width: '90%',
+      align: 'center',
+      heading: 'கதையின் பக்கங்கள்',
+      description: 'அடுத்து பக்கத்துக்கு செல்ல பக்கத்தின் இடது புறத்தில் தீண்டவும்'
+    },
+    {
+      source: 'left_navigation.gif',
+      width: '83vw',
+      align: 'center'
+    },
+    {
+      width: '90%',
+      align: 'center',
+      heading: 'கதையின் பக்கங்கள்',
+      description: 'முன் பக்கத்துக்கு செல்ல பக்கத்தின் வலது புறத்தில் தீண்டவும்'
+    },
+    {
+      source: 'right_navigation.gif',
+      width: '83vw',
+      align: 'center'
+    }
   ]
 };
 
